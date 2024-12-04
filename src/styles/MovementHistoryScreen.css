@@ -1,0 +1,125 @@
+.container {
+    padding: 20px;
+    background-color: #e8f5e9;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+  }
+  
+  .header {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4caf50;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .filter-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .filter-button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 20px;
+    border: none;
+    background-color: #fff;
+    color: #4caf50;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .active-filter {
+    background-color: #4caf50;
+    color: #fff;
+  }
+  
+  .movements-list {
+    margin-top: 20px;
+  }
+  
+  .movement-row {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .icon-container {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    border-radius: 50%;
+  }
+  
+  .icon-container.entrada {
+    background-color: #4caf50;
+    color: #fff;
+  }
+  
+  .icon-container.salida {
+    background-color: #d32f2f;
+    color: #fff;
+  }
+  
+  .icon {
+    font-size: 24px;
+  }
+  
+  .text-container {
+    flex: 1;
+  }
+  
+  .movement-type {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4caf50;
+  }
+  
+  .movement-details {
+    font-size: 16px;
+    color: #333;
+    margin-top: 5px;
+  }
+  
+  .movement-date {
+    font-size: 14px;
+    color: #888;
+    margin-top: 10px;
+  }
+  
+  .empty-text {
+    text-align: center;
+    font-size: 16px;
+    color: #888;
+    margin-top: 20px;
+  }
+  
+  .floating-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #4caf50;
+    color: #fff;
+    font-size: 30px;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .floating-button:hover {
+    background-color: #45a049;
+  }
+  

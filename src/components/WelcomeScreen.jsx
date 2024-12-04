@@ -1,8 +1,10 @@
 import React from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import '../styles/WelcomeScreen.css';
 
-const WelcomeScreen = ({ navigate }) => {
+const WelcomeScreen = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="container">
       {/* Logo de la aplicación */}

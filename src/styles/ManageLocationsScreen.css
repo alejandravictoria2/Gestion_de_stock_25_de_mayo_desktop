@@ -1,0 +1,94 @@
+.container {
+    padding: 20px;
+    background-color: #e8f5e9;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+  }
+  
+  .header {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4caf50;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .search-container {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .search-input {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .table-container {
+    margin-top: 20px;
+  }
+  
+  .table-header-row,
+  .table-row {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .table-header {
+    flex: 1;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+  }
+  
+  .table-cell {
+    flex: 1;
+    text-align: center;
+    color: #333;
+  }
+  
+  .actions-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .delete-button {
+    background-color: #d32f2f;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .delete-button:hover {
+    background-color: #b71c1c;
+  }
+  
+  .floating-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #4caf50;
+    color: #fff;
+    font-size: 24px;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .floating-button:hover {
+    background-color: #45a049;
+  }
+  
