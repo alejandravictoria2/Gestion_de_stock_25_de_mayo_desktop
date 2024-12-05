@@ -1,0 +1,60 @@
+.purchase-container {
+    padding: 20px;
+    background-color: #e8f5e9;
+    min-height: 100vh;
+  }
+  
+  .purchase-title {
+    font-size: 24px;
+    color: #4caf50;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .purchase-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .purchase-table th,
+  .purchase-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .purchase-table th {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .details-table th,
+  .details-table td {
+    padding: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .details-table th {
+    background-color: #f0f0f0;
+  }
+  
+  .add-detail-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .add-detail-button:hover {
+    background-color: #45a049;
+  }
+  

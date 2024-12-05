@@ -2,65 +2,44 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  // Modo de configuración (development o production)
-  mode: 'development', // Cambia a 'production' cuando estés listo para producción
-
-  // Archivo de entrada principal
-  entry: './src/index.js',
-
-  // Configuración de salida
+  mode: 'development', // Cambia a 'production' para la versión final
+  entry: './src/index.js', // Archivo de entrada principal
   output: {
     filename: 'bundle.js', // Nombre del archivo de salida
-    path: path.resolve(__dirname, 'dist'), // Carpeta donde se guardarán los archivos
-    clean: true, // Limpia la carpeta dist antes de generar nuevos archivos
+    path: path.resolve(__dirname, 'dist'), // Carpeta de salida
+    clean: true, // Limpia la carpeta 'dist' en cada compilación
   },
-
-  // Configuración de módulos
   module: {
     rules: [
       {
-        // Manejo de archivos JavaScript y JSX
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx)$/, // Maneja archivos .js y .jsx
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader', // Usa Babel para transpilar código moderno de React y JS
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'], // Configuración para ES6+ y React
-          },
-        },
+        use: 'babel-loader', // Usa Babel para transpilar el código
       },
       {
-        // Manejo de archivos CSS
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'], // Procesa e inyecta CSS
+        test: /\.css$/, // Maneja archivos CSS
+        use: ['style-loader', 'css-loader'], // Carga y aplica estilos CSS
       },
       {
-        // Manejo de imágenes y otros recursos estáticos
-        test: /\.(png|jpg|gif|svg)$/,
-        type: 'asset/resource', // Mueve las imágenes a la carpeta dist automáticamente
+        test: /\.(png|jpg|jpeg|gif|svg)$/, // Maneja imágenes
+        type: 'asset/resource', // Coloca las imágenes en la carpeta de salida
       },
     ],
   },
-
-  // Configuración de resolución de archivos
   resolve: {
-    extensions: ['.js', '.jsx'], // Permite omitir extensiones al importar archivos
+    extensions: ['.js', '.jsx'], // Permite importar archivos sin especificar extensión
   },
-
-  // Plugins
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html', // Archivo HTML base
     }),
   ],
-
-  // Configuración del servidor de desarrollo
   devServer: {
     static: {
-      directory: path.join(__dirname, 'dist'), // Carpeta de archivos estáticos
+      directory: path.join(__dirname, 'dist'), // Carpeta donde servirá los archivos
     },
-    compress: true, // Habilita compresión gzip
-    port: 3000, // Puerto en el que se ejecutará el servidor
+    compress: true, // Habilita la compresión gzip
+    port: 3000, // Puerto del servidor de desarrollo
     hot: true, // Habilita recarga en caliente
   },
 };
