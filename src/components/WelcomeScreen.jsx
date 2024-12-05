@@ -1,20 +1,20 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../styles/WelcomeScreen.css';
+import '../styles/WelcomeScreen.css'; // Asegúrate de que el archivo CSS tenga los estilos
 
-const WelcomeScreen = () => {
-  const navigate = useNavigate();
-
+const WelcomeScreen = ({ navigate }) => {
   return (
     <div className="container">
-      {/* Logo de la aplicación */}
+      {/* Logo */}
       <img src="../assets/logo.png" alt="Logo" className="logo" />
-      {/* Texto de Bienvenida */}
+      
+      {/* Título */}
       <h1 className="title">¡Bienvenido a la Gestión de Inventario!</h1>
+      
+      {/* Subtítulo */}
       <p className="subtitle">Administra tus inventarios de forma rápida y sencilla</p>
-
-      {/* Botón para entrar a la pantalla de inicio de sesión */}
-      <button className="button" onClick={() => navigate('login')}>
+      
+      {/* Botón */}
+      <button className="button" onClick={() => navigate('home')}>
         Empezar
       </button>
     </div>

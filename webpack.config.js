@@ -2,44 +2,65 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'development', // O 'production' para la versión final
-  entry: './src/index.js', // Archivo de entrada
+  // Modo de configuración (development o production)
+  mode: 'development', // Cambia a 'production' cuando estés listo para producción
+
+  // Archivo de entrada principal
+  entry: './src/index.js',
+
+  // Configuración de salida
   output: {
-    filename: 'bundle.js', // Archivo de salida
-    path: path.resolve(__dirname, 'dist'), // Carpeta donde se guardará el resultado
-    clean: true, // Limpia automáticamente la carpeta dist
+    filename: 'bundle.js', // Nombre del archivo de salida
+    path: path.resolve(__dirname, 'dist'), // Carpeta donde se guardarán los archivos
+    clean: true, // Limpia la carpeta dist antes de generar nuevos archivos
   },
+
+  // Configuración de módulos
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/, // Transforma archivos .js y .jsx
-        exclude: /node_modules/, // Ignora node_modules
+        // Manejo de archivos JavaScript y JSX
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: 'babel-loader', // Usa Babel para transpilar código moderno de React y JS
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react'], // Configuración para ES6+ y React
+          },
         },
       },
       {
-        test: /\.css$/, // Maneja archivos CSS
-        use: ['style-loader', 'css-loader'],
+        // Manejo de archivos CSS
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'], // Procesa e inyecta CSS
       },
       {
-        test: /\.(png|jpe?g|gif|svg)$/, // Maneja archivos de imagen
-        type: 'asset/resource',
+        // Manejo de imágenes y otros recursos estáticos
+        test: /\.(png|jpg|gif|svg)$/,
+        type: 'asset/resource', // Mueve las imágenes a la carpeta dist automáticamente
       },
     ],
   },
+
+  // Configuración de resolución de archivos
   resolve: {
-    extensions: ['.js', '.jsx'], // Resuelve estos tipos de archivos automáticamente
+    extensions: ['.js', '.jsx'], // Permite omitir extensiones al importar archivos
   },
+
+  // Plugins
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html', // Archivo HTML de plantilla
+      template: './src/index.html', // Archivo HTML base
     }),
   ],
+
+  // Configuración del servidor de desarrollo
   devServer: {
-    static: path.join(__dirname, 'dist'), // Carpeta a servir
-    compress: true, // Habilita la compresión gzip
-    port: 3000, // Puerto del servidor de desarrollo
-    open: true, // Abre el navegador automáticamente
+    static: {
+      directory: path.join(__dirname, 'dist'), // Carpeta de archivos estáticos
+    },
+    compress: true, // Habilita compresión gzip
+    port: 3000, // Puerto en el que se ejecutará el servidor
+    hot: true, // Habilita recarga en caliente
   },
 };
