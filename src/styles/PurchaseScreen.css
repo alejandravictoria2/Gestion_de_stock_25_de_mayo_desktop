@@ -1,19 +1,24 @@
+/* Contenedor principal */
 .purchase-container {
     padding: 20px;
-    background-color: #e8f5e9;
-    min-height: 100vh;
+    background-color: #e8f5e9; /* Fondo verde claro */
+    min-height: 100vh; /* Asegura que ocupe toda la altura de la pantalla */
   }
   
+  /* Título principal */
   .purchase-title {
     font-size: 24px;
-    color: #4caf50;
+    font-weight: bold;
+    color: #4caf50; /* Verde principal */
     text-align: center;
     margin-bottom: 20px;
   }
   
+  /* Tabla de compras */
   .purchase-table {
     width: 100%;
     border-collapse: collapse;
+    margin-bottom: 20px;
   }
   
   .purchase-table th,
@@ -24,10 +29,12 @@
   }
   
   .purchase-table th {
-    background-color: #4caf50;
+    background-color: #4caf50; /* Verde principal */
     color: white;
+    font-weight: bold;
   }
   
+  /* Tabla de detalles */
   .details-table {
     width: 100%;
     border-collapse: collapse;
@@ -36,12 +43,105 @@
   
   .details-table th,
   .details-table td {
-    padding: 5px;
+    padding: 8px;
     border: 1px solid #ddd;
+    text-align: left;
   }
   
   .details-table th {
-    background-color: #f0f0f0;
+    background-color: #f9f9f9;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  /* Botón de volver */
+  .back-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .back-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Botón flotante para agregar compras */
+  .add-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .add-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #4caf50;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .modal-content label {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .modal-content input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
   }
   
   .add-detail-button {
@@ -56,5 +156,47 @@
   
   .add-detail-button:hover {
     background-color: #45a049;
+  }
+  
+  /* Botones del modal */
+  .add-button,
+  .close-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .add-button {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .add-button:hover {
+    background-color: #45a049;
+  }
+  
+  .close-button {
+    background-color: #ddd;
+    color: #333;
+  }
+  
+  .close-button:hover {
+    background-color: #bbb;
+  }
+  
+  /* Fila de detalles en el modal */
+  .detail-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .detail-row input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
   }
   

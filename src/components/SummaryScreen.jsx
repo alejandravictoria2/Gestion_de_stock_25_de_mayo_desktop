@@ -4,33 +4,31 @@ import '../styles/SummaryScreen.css';
 const SummaryScreen = ({ navigate }) => {
   return (
     <div className="summary-container">
+      {/* Botón de volver */}
+      <button className="back-button" onClick={() => navigate('inventory')}>
+        ← Volver
+      </button>
+
       <h1 className="summary-title">Resumen</h1>
 
-      {/* Sección de Gráficos */}
-      <div className="chart">
-        <h2>Niveles de Inventario por Categoría</h2>
-        <div className="chart-placeholder">[Gráfico de Barras]</div>
+      {/* Contenido del resumen */}
+      <div className="summary-content">
+        <div className="summary-item">
+          <h3>Total de Ventas</h3>
+          <p>$50,000</p>
+        </div>
+        <div className="summary-item">
+          <h3>Productos en Inventario</h3>
+          <p>150</p>
+        </div>
+        <div className="summary-item">
+          <h3>Depósitos Activos</h3>
+          <p>3</p>
+        </div>
       </div>
-
-      <div className="chart">
-        <h2>Ventas Mensuales</h2>
-        <div className="chart-placeholder">[Gráfico de Líneas]</div>
-      </div>
-
-      <div className="chart">
-        <h2>Distribución de Inventario por Categoría</h2>
-        <div className="chart-placeholder">[Gráfico de Pastel]</div>
-      </div>
-
-      {/* Botón para ir al Inventario */}
-      <button
-        className="navigate-button"
-        onClick={() => navigate('inventory')}
-      >
-        Ir al Inventario
-      </button>
     </div>
   );
 };
 
 export default SummaryScreen;
+

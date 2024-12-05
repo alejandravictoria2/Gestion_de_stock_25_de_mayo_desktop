@@ -71,6 +71,11 @@ const PurchaseScreen = ({ navigate }) => {
 
   return (
     <div className="purchase-container">
+      {/* Botón de volver */}
+      <button className="back-button" onClick={() => navigate('inventory')}>
+        ← Volver
+      </button>
+
       <h1 className="purchase-title">Compras</h1>
 
       {/* Tabla de compras */}

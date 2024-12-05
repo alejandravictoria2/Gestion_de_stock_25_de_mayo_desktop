@@ -65,3 +65,4 @@ const MovementsScreen = ({ navigate }) => {
 };
 
 export default MovementsScreen;
+

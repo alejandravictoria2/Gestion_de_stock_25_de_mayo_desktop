@@ -43,3 +43,4 @@ module.exports = {
     hot: true, // Habilita recarga en caliente
   },
 };
+
