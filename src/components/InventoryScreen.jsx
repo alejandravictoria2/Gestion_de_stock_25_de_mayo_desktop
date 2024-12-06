@@ -2,88 +2,121 @@ import React, { useState } from 'react';
 import '../styles/InventoryScreen.css';
 
 const InventoryScreen = ({ navigate }) => {
-  const [search, setSearch] = useState('');
-  const [filter, setFilter] = useState('Todos');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedDeposit, setSelectedDeposit] = useState('Todos');
 
-  const inventoryData = [
-    { id: 1, name: 'Producto A', quantity: 10, price: 1500, depot: 1 },
-    { id: 2, name: 'Producto B', quantity: 5, price: 1000, depot: 1 },
-    { id: 3, name: 'Producto C', quantity: 20, price: 2400, depot: 1 },
-    { id: 4, name: 'Fusible', quantity: 100, price: 1200, depot: 1 },
-    { id: 5, name: 'Llave', quantity: 4, price: 2000, depot: 1 },
-    { id: 6, name: 'Alicate', quantity: 10, price: 200, depot: 2 },
+  const products = [
+    { id: 1, name: 'Producto A', quantity: 10, price: 1500, deposit: '1' },
+    { id: 2, name: 'Producto B', quantity: 5, price: 1000, deposit: '1' },
+    { id: 3, name: 'Producto C', quantity: 20, price: 2400, deposit: '1' },
+    { id: 4, name: 'Producto Ejemplo', quantity: 50, price: 5000, deposit: '1' },
+    { id: 5, name: 'Llave', quantity: 4, price: 2000, deposit: '2' },
+    { id: 6, name: 'Alicate', quantity: 10, price: 200, deposit: '2' },
   ];
 
-  const filteredData = inventoryData.filter((item) => {
-    const matchesSearch = item.name.toLowerCase().includes(search.toLowerCase());
-    const matchesFilter = filter === 'Todos' || item.depot.toString() === filter;
-    return matchesSearch && matchesFilter;
-  });
+  const deposits = ['Todos', '1', '2'];
+
+  const filteredProducts = products.filter(
+    (product) =>
+      (selectedDeposit === 'Todos' || product.deposit === selectedDeposit) &&
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="inventory-container">
-      <h1 className="inventory-title">Inventario</h1>
+      <header className="inventory-header">
+        <h1>Inventario</h1>
+      </header>
 
       {/* Filtros */}
-      <div className="filters">
-        <div className="filter">
-          <label htmlFor="search">Filtrar por nombre:</label>
+      <div className="inventory-filters">
+        <div className="filter-group">
+          <label>Filtrar por nombre:</label>
           <input
-            id="search"
             type="text"
             placeholder="Buscar en inventario..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <div className="filter">
-          <label htmlFor="depot">Filtrar por depósito:</label>
+        <div className="filter-group">
+          <label>Filtrar por depósito:</label>
           <select
-            id="depot"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
+            value={selectedDeposit}
+            onChange={(e) => setSelectedDeposit(e.target.value)}
           >
-            <option value="Todos">Todos</option>
-            <option value="1">Depósito 1</option>
-            <option value="2">Depósito 2</option>
+            {deposits.map((deposit) => (
+              <option key={deposit} value={deposit}>
+                {deposit}
+              </option>
+            ))}
           </select>
         </div>
       </div>
 
-      {/* Tabla de Inventario */}
-      <table className="inventory-table">
-        <thead>
-          <tr>
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
-            <th>Depósito</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredData.map((item) => (
-            <tr key={item.id}>
-              <td>{item.name}</td>
-              <td>{item.quantity}</td>
-              <td>${item.price}</td>
-              <td>{item.depot}</td>
-              <td>
-                <button className="delete-button">🗑️</button>
-              </td>
+      {/* Tabla */}
+      <div className="inventory-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+              <th>Depósito</th>
+              <th>Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {/* Menú de navegación */}
-      <div className="navigation-menu">
-        <button onClick={() => navigate('summary')} className="nav-button">Inicio</button>
-        <button onClick={() => navigate('movements')} className="nav-button">Movimientos</button>
-        <button onClick={() => navigate('purchase')} className="nav-button">Compra</button>
+          </thead>
+          <tbody>
+            {filteredProducts.length > 0 ? (
+              filteredProducts.map((product) => (
+                <tr key={product.id}>
+                  <td>{product.name}</td>
+                  <td>{product.quantity}</td>
+                  <td>${product.price}</td>
+                  <td>{product.deposit}</td>
+                  <td>
+                    <button
+                      className="delete-button"
+                      onClick={() => alert(`Eliminar: ${product.name}`)}
+                    >
+                      🗑
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" className="no-products">
+                  No se encontraron productos.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
+
+      {/* Barra de navegación inferior */}
+      <nav className="bottom-navigation">
+        <button onClick={() => navigate('summary')} className="nav-button">
+          <span role="img" aria-label="Inicio">🏠</span>
+          <p>Inicio</p>
+        </button>
+        <button onClick={() => navigate('inventory')} className="nav-button active">
+          <span role="img" aria-label="Inventario">📦</span>
+          <p>Inventario</p>
+        </button>
+        <button onClick={() => navigate('movements')} className="nav-button">
+          <span role="img" aria-label="Movimientos">🔄</span>
+          <p>Movimientos</p>
+        </button>
+        <button onClick={() => navigate('purchase')} className="nav-button">
+          <span role="img" aria-label="Compras">🛒</span>
+          <p>Compras</p>
+        </button>
+      </nav>
     </div>
   );
 };
 
 export default InventoryScreen;
+

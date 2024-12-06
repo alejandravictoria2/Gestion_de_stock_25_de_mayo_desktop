@@ -4,14 +4,13 @@ import '../styles/PurchaseScreen.css';
 const PurchaseScreen = ({ navigate }) => {
   const [purchasesData, setPurchasesData] = useState([
     {
-      id: 20,
+      id: 1,
       date: '2024-12-01',
       provider: 'Enersa',
       depot: 'Hasenkamp',
       details: [
         { name: 'Producto A', quantity: 10, unit: 'm', price: 1500 },
         { name: 'Producto B', quantity: 5, unit: 'm', price: 1000 },
-        { name: 'Producto C', quantity: 20, unit: 'm', price: 2400 },
       ],
     },
   ]);
@@ -21,32 +20,14 @@ const PurchaseScreen = ({ navigate }) => {
     date: '',
     provider: '',
     depot: '',
-    details: [{ name: '', quantity: '', unit: '', price: '' }],
+    details: [],
   });
 
-  const [showAddModal, setShowAddModal] = useState(false);
-
-  const openAddModal = () => setShowAddModal(true);
-  const closeAddModal = () => {
-    setShowAddModal(false);
-    setNewPurchase({
-      id: '',
-      date: '',
-      provider: '',
-      depot: '',
-      details: [{ name: '', quantity: '', unit: '', price: '' }],
-    });
-  };
+  const [isAdding, setIsAdding] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewPurchase((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleDetailChange = (index, field, value) => {
-    const updatedDetails = [...newPurchase.details];
-    updatedDetails[index][field] = value;
-    setNewPurchase((prev) => ({ ...prev, details: updatedDetails }));
   };
 
   const addNewDetail = () => {
@@ -56,38 +37,47 @@ const PurchaseScreen = ({ navigate }) => {
     }));
   };
 
+  const handleDetailChange = (index, field, value) => {
+    const updatedDetails = [...newPurchase.details];
+    updatedDetails[index][field] = value;
+    setNewPurchase((prev) => ({ ...prev, details: updatedDetails }));
+  };
+
   const handleAddPurchase = () => {
     if (!newPurchase.id || !newPurchase.date || !newPurchase.provider || !newPurchase.depot) {
       alert('Por favor, completa todos los campos.');
       return;
     }
     setPurchasesData((prev) => [...prev, newPurchase]);
-    closeAddModal();
+    setIsAdding(false);
+    setNewPurchase({
+      id: '',
+      date: '',
+      provider: '',
+      depot: '',
+      details: [],
+    });
   };
 
-  const calculateTotal = (details) => {
-    return details.reduce((sum, item) => sum + (item.quantity * item.price || 0), 0);
-  };
+  const calculateTotal = (details) =>
+    details.reduce((sum, item) => sum + (item.quantity * item.price || 0), 0);
 
   return (
     <div className="purchase-container">
-      {/* Botón de volver */}
-      <button className="back-button" onClick={() => navigate('inventory')}>
-        ← Volver
-      </button>
-
-      <h1 className="purchase-title">Compras</h1>
+      <header className="purchase-header">
+        <h1>Gestión de Compras</h1>
+      </header>
 
       {/* Tabla de compras */}
       <table className="purchase-table">
         <thead>
           <tr>
-            <th>Compra</th>
+            <th>Código</th>
             <th>Fecha</th>
             <th>Proveedor</th>
             <th>Depósito</th>
             <th>Total</th>
-            <th>Detalles</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -99,136 +89,137 @@ const PurchaseScreen = ({ navigate }) => {
               <td>{purchase.depot}</td>
               <td>U$S {calculateTotal(purchase.details)}</td>
               <td>
-                <table className="details-table">
-                  <thead>
-                    <tr>
-                      <th>Nombre</th>
-                      <th>Cantidad</th>
-                      <th>Unidad</th>
-                      <th>Precio</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {purchase.details.map((detail, index) => (
-                      <tr key={index}>
-                        <td>{detail.name}</td>
-                        <td>{detail.quantity}</td>
-                        <td>{detail.unit}</td>
-                        <td>U$S {detail.price}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <button
+                  className="view-details-button"
+                  onClick={() => alert(JSON.stringify(purchase, null, 2))}
+                >
+                  Ver Detalle
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {/* Botón flotante para agregar compras */}
-      <button className="add-button" onClick={openAddModal}>
+      {/* Botón flotante para agregar nueva compra */}
+      <button className="add-button" onClick={() => setIsAdding(true)}>
         +
       </button>
 
-      {/* Modal para agregar compra */}
-      {showAddModal && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h2 className="modal-title">Agregar Compra</h2>
-            <div className="modal-content">
-              <label>
-                Código de Compra:
-                <input
-                  type="text"
-                  name="id"
-                  value={newPurchase.id}
-                  onChange={handleInputChange}
-                  placeholder="Ej: 25"
-                />
-              </label>
-              <label>
-                Fecha:
-                <input
-                  type="date"
-                  name="date"
-                  value={newPurchase.date}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <label>
-                Proveedor:
-                <input
-                  type="text"
-                  name="provider"
-                  value={newPurchase.provider}
-                  onChange={handleInputChange}
-                  placeholder="Ej: Enersa"
-                />
-              </label>
-              <label>
-                Depósito:
-                <input
-                  type="text"
-                  name="depot"
-                  value={newPurchase.depot}
-                  onChange={handleInputChange}
-                  placeholder="Ej: Hasenkamp"
-                />
-              </label>
-              <div>
-                <h3>Detalles</h3>
-                {newPurchase.details.map((detail, index) => (
-                  <div key={index} className="detail-row">
-                    <input
-                      type="text"
-                      placeholder="Producto"
-                      value={detail.name}
-                      onChange={(e) =>
-                        handleDetailChange(index, 'name', e.target.value)
-                      }
-                    />
-                    <input
-                      type="number"
-                      placeholder="Cantidad"
-                      value={detail.quantity}
-                      onChange={(e) =>
-                        handleDetailChange(index, 'quantity', e.target.value)
-                      }
-                    />
-                    <input
-                      type="text"
-                      placeholder="Unidad"
-                      value={detail.unit}
-                      onChange={(e) =>
-                        handleDetailChange(index, 'unit', e.target.value)
-                      }
-                    />
-                    <input
-                      type="number"
-                      placeholder="Precio"
-                      value={detail.price}
-                      onChange={(e) =>
-                        handleDetailChange(index, 'price', e.target.value)
-                      }
-                    />
-                  </div>
-                ))}
-                <button onClick={addNewDetail} className="add-detail-button">
-                  Agregar Detalle
-                </button>
-              </div>
-              <div className="modal-buttons">
-                <button className="add-button" onClick={handleAddPurchase}>
-                  Guardar
-                </button>
-                <button className="close-button" onClick={closeAddModal}>
-                  Cancelar
-                </button>
-              </div>
+      {/* Formulario para agregar compras */}
+      {isAdding && (
+        <div className="add-form">
+          <h2>Agregar Compra</h2>
+          <label>
+            Código:
+            <input
+              type="text"
+              name="id"
+              value={newPurchase.id}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Fecha:
+            <input
+              type="date"
+              name="date"
+              value={newPurchase.date}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Proveedor:
+            <input
+              type="text"
+              name="provider"
+              value={newPurchase.provider}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Depósito:
+            <input
+              type="text"
+              name="depot"
+              value={newPurchase.depot}
+              onChange={handleInputChange}
+            />
+          </label>
+
+          {/* Detalles de compra */}
+          <h3>Detalles</h3>
+          {newPurchase.details.map((detail, index) => (
+            <div key={index} className="detail-row">
+              <input
+                type="text"
+                placeholder="Producto"
+                value={detail.name}
+                onChange={(e) => handleDetailChange(index, 'name', e.target.value)}
+              />
+              <input
+                type="number"
+                placeholder="Cantidad"
+                value={detail.quantity}
+                onChange={(e) => handleDetailChange(index, 'quantity', e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Unidad"
+                value={detail.unit}
+                onChange={(e) => handleDetailChange(index, 'unit', e.target.value)}
+              />
+              <input
+                type="number"
+                placeholder="Precio"
+                value={detail.price}
+                onChange={(e) => handleDetailChange(index, 'price', e.target.value)}
+              />
             </div>
+          ))}
+          <button className="add-detail-button" onClick={addNewDetail}>
+            + Agregar Detalle
+          </button>
+
+          {/* Botones de acción */}
+          <div className="form-buttons">
+            <button className="save-button" onClick={handleAddPurchase}>
+              Guardar
+            </button>
+            <button className="cancel-button" onClick={() => setIsAdding(false)}>
+              Cancelar
+            </button>
           </div>
         </div>
       )}
+
+      {/* Barra de navegación */}
+      <nav className="bottom-navigation">
+        <button className="nav-button" onClick={() => navigate('summary')}>
+          <span role="img" aria-label="Inicio">
+            🏠
+          </span>
+          <p>Inicio</p>
+        </button>
+        <button className="nav-button" onClick={() => navigate('inventory')}>
+          <span role="img" aria-label="Inventario">
+            📦
+          </span>
+          <p>Inventario</p>
+        </button>
+        <button className="nav-button" onClick={() => navigate('movements')}>
+          <span role="img" aria-label="Movimientos">
+            🔄
+          </span>
+          <p>Movimientos</p>
+        </button>
+        <button className="nav-button active" onClick={() => navigate('purchase')}>
+          <span role="img" aria-label="Compras">
+            🛒
+          </span>
+          <p>Compras</p>
+        </button>
+      </nav>
     </div>
   );
 };

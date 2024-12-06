@@ -2,26 +2,43 @@ import React, { useState } from 'react';
 import '../styles/MovementsScreen.css';
 
 const MovementsScreen = ({ navigate }) => {
-  const [filter, setFilter] = useState('Todos'); // Estado para el filtro seleccionado
-
-  const movementsData = [
-    { id: 1, type: 'Entrada', item: 'Transformador', quantity: 10, date: '2024-10-28 10:00 AM' },
-    { id: 2, type: 'Salida', item: 'Cable', quantity: 5, date: '2024-10-29 02:30 PM' },
-    { id: 3, type: 'Entrada', item: 'Medidor', quantity: 8, date: '2024-10-30 11:15 AM' },
-    { id: 4, type: 'Salida', item: 'Fusible', quantity: 3, date: '2024-10-31 01:20 PM' },
+  const [filter, setFilter] = useState('Todos');
+  const movements = [
+    { id: 1, type: 'Entrada', product: 'Transformador', quantity: 10, date: '2024-10-28', warehouse: 'Depósito 1', operator: 'Juan Pérez' },
+    { id: 2, type: 'Salida', product: 'Cable', quantity: 5, date: '2024-10-29', warehouse: 'Depósito 2', operator: 'María López' },
+    { id: 3, type: 'Entrada', product: 'Medidor', quantity: 8, date: '2024-10-30', warehouse: 'Depósito 3', operator: 'Carlos Ruiz' },
+    { id: 4, type: 'Salida', product: 'Fusible', quantity: 3, date: '2024-11-01', warehouse: 'Depósito 1', operator: 'Ana Gómez' },
   ];
 
-  // Filtrar movimientos según el tipo (Entrada, Salida o Todos)
-  const filteredData = movementsData.filter((movement) => {
-    return filter === 'Todos' || movement.type === filter;
-  });
+  const filteredMovements = movements.filter(
+    (movement) => filter === 'Todos' || movement.type === filter
+  );
 
   return (
     <div className="movements-container">
-      <h1 className="movements-title">Historial de Movimientos</h1>
+      {/* Encabezado */}
+      <header className="movements-header">
+        <h1>Historial de Movimientos</h1>
+      </header>
+
+      {/* Estadísticas rápidas */}
+      <div className="statistics">
+        <div className="stat-card">
+          <h3>Total Movimientos</h3>
+          <p>{movements.length}</p>
+        </div>
+        <div className="stat-card">
+          <h3>Entradas</h3>
+          <p>{movements.filter((m) => m.type === 'Entrada').length}</p>
+        </div>
+        <div className="stat-card">
+          <h3>Salidas</h3>
+          <p>{movements.filter((m) => m.type === 'Salida').length}</p>
+        </div>
+      </div>
 
       {/* Filtros */}
-      <div className="filters">
+      <div className="movements-filters">
         <button
           className={`filter-button ${filter === 'Todos' ? 'active' : ''}`}
           onClick={() => setFilter('Todos')}
@@ -32,37 +49,65 @@ const MovementsScreen = ({ navigate }) => {
           className={`filter-button ${filter === 'Entrada' ? 'active' : ''}`}
           onClick={() => setFilter('Entrada')}
         >
-          Entrada
+          Entradas
         </button>
         <button
           className={`filter-button ${filter === 'Salida' ? 'active' : ''}`}
           onClick={() => setFilter('Salida')}
         >
-          Salida
+          Salidas
         </button>
       </div>
 
-      {/* Lista de Movimientos */}
+      {/* Lista de movimientos */}
       <div className="movements-list">
-        {filteredData.map((movement) => (
-          <div key={movement.id} className={`movement-item ${movement.type.toLowerCase()}`}>
-            <h3 className="movement-type">{movement.type}</h3>
-            <p className="movement-item-name">{movement.item}</p>
-            <p className="movement-quantity">Cantidad: {movement.quantity}</p>
-            <p className="movement-date">{movement.date}</p>
-          </div>
-        ))}
+        {filteredMovements.length > 0 ? (
+          filteredMovements.map((movement) => (
+            <div className={`movement-card ${movement.type.toLowerCase()}`} key={movement.id}>
+              <div className="movement-info">
+                <h3>{movement.type}</h3>
+                <p><strong>Producto:</strong> {movement.product}</p>
+                <p><strong>Cantidad:</strong> {movement.quantity}</p>
+                <p><strong>Fecha:</strong> {movement.date}</p>
+                <p><strong>Depósito:</strong> {movement.warehouse}</p>
+                <p><strong>Operador:</strong> {movement.operator}</p>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p className="no-movements">No hay movimientos registrados.</p>
+        )}
       </div>
 
-      {/* Menú de Navegación */}
-      <div className="navigation-menu">
-        <button onClick={() => navigate('summary')} className="nav-button">Inicio</button>
-        <button onClick={() => navigate('inventory')} className="nav-button">Inventario</button>
-        <button onClick={() => navigate('purchase')} className="nav-button">Compra</button>
-      </div>
+      {/* Barra de navegación */}
+      <nav className="bottom-navigation">
+        <button className="nav-button" onClick={() => navigate('summary')}>
+          <span role="img" aria-label="Inicio">
+            🏠
+          </span>
+          <p>Inicio</p>
+        </button>
+        <button className="nav-button active" onClick={() => navigate('movements')}>
+          <span role="img" aria-label="Movimientos">
+            🔄
+          </span>
+          <p>Movimientos</p>
+        </button>
+        <button className="nav-button" onClick={() => navigate('inventory')}>
+          <span role="img" aria-label="Inventario">
+            📦
+          </span>
+          <p>Inventario</p>
+        </button>
+        <button className="nav-button" onClick={() => navigate('purchase')}>
+          <span role="img" aria-label="Compras">
+            🛒
+          </span>
+          <p>Compras</p>
+        </button>
+      </nav>
     </div>
   );
 };
 
 export default MovementsScreen;
-
